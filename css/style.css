@@ -1,0 +1,161 @@
+* {
+  box-sizing: border-box;
+}
+
+/* table */
+.table {
+  background: #C8C8C8;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.table .table_row /*, .flex*/ {
+  display: flex;
+}
+
+.table .table_row .table_cell {
+  flex: 5;
+  border: 1px solid gray;
+}
+
+.table .table_row .table_cell:first-child, .table .table_row.table_row-footer .table_cell {
+  flex: 1;
+}
+
+.table .table_row.table_row-header, .table .table_row.table_row-footer {
+  font-weight: bold;
+}
+/*
+ {
+  flex: 1;
+}*/
+.table .table_row.table_row-footer > .table_cell:first-child {
+  text-align: right;
+}
+
+.table .table_row.table_row-footer > .table_cell:last-child {
+  text-align: center;
+}
+
+.table_row:not(.table_row-header):not(.table_row-footer) [name=employeeSalary]::before {
+  content: '$ ';
+}
+/* table end */
+
+
+button {
+  display: none;
+  border-radius: 5px;
+}
+
+form {
+  display: none;
+  transition: all 0.3s ease-out 0s;  
+}
+
+.flex {
+  display: inline-flex;
+}
+
+form.data {
+  width: 100%;
+}
+
+form.data input {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  flex: 5;
+  border: 1px solid gray;
+}
+
+.data input:first-child {
+  flex: 1;
+}
+
+.visible-inline {
+  display: inline-block;
+}
+
+.animated {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInDownBig {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -2000px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInDownBig {
+  animation-name: fadeInDownBig;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInRight {
+  animation-name: fadeInRight;
+}
+
+input:invalid {
+  background-color: #ffdddd;
+}
+  
+form:invalid {
+  border: 1px solid #ffdddd;
+}
+  
+input:valid {
+  background-color: #ddffdd;
+}
+  
+form:valid {
+  border: 1px solid #ddffdd;
+}
+    
+input:required {
+  border-color: #800000;
+  border-width: 3px;
+}
+  
+input:required:invalid {
+  border-color: #C00000;
+}
+
+input:disabled {
+  background-color: #C0C0C0;
+}
