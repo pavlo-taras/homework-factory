@@ -10,7 +10,7 @@
   justify-content: space-evenly;
 }
 
-.table .table_row /*, .flex*/ {
+.table .table_row {
   display: flex;
 }
 
@@ -26,10 +26,7 @@
 .table .table_row.table_row-header, .table .table_row.table_row-footer {
   font-weight: bold;
 }
-/*
- {
-  flex: 1;
-}*/
+
 .table .table_row.table_row-footer > .table_cell:first-child {
   text-align: right;
 }
@@ -42,7 +39,6 @@
   content: '$ ';
 }
 /* table end */
-
 
 button {
   display: none;

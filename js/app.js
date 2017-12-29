@@ -4,12 +4,6 @@ var rows = [
     lastName: "Doe",
     salary: 1000,
     position: "Manager"
-  },
-  {
-    firstName: "Pavlo",
-    lastName: "Taras",
-    salary: 1500,
-    position: "Team Leader"
   }
 ];
 
@@ -41,7 +35,7 @@ function buildTable($table, rows, headers) {
 
   // add data rows
   for (var i = 0, row; i < rows.length; i++) {
-    row = Object.assign({'index': i + 1}, rows[i])
+    row = Object.assign({item : countNumberEmployees() + 1}, rows[i]);
 
     $table.appendChild(
       createRow(
@@ -88,10 +82,7 @@ function extractHeaders(rows) {
 };
 
 function createRow($tableRow, row, options) {  
-  console.log(row);
-
   for (var item in row) {
-    console.log('item', item);
     $tableRow.appendChild(addElement('div', Object.assign(options, {"data-cell" : item, innerHTML: row[item]})));
   }
 
@@ -146,27 +137,28 @@ btnAddNewEmployee.addEventListener('click', function(e) {
 });
 
 btnSaveEmployee.addEventListener('click', function(e) {
-
   if (formNewEmployee.checkValidity()) {
-    var data = [];
+    var data = {};
 
-    for (var element of $('form.data > input')) {
-      data[element.name] = element.value;
+    for (var element of formNewEmployee.elements) {
+      data[element.name] = element.value.toCapitalizeFirstLetter();
     }
+ 
+    data['item'] = countNumberEmployees() + 1;
 
-    $('.table_row:not(.table_row-header):not(.table_row-footer)')[countNumberEmployees()-1].after(
+    $('.table_row[data-row=employee]')[countNumberEmployees()-1].after(
       createRow(
         addElement('div', {class: "table_row", "data-row": "employee"}),
         data,
         {class: "table_cell"}
       )
     )
-      
+
     printNumberEmployees()
     printAvarageSalary();
 
     btnAddNewEmployee.classList.add('visible-inline');
-    btnAddNewEmployee.disabled = canAddNewEmployee() || countNumberEmployees() > limit;
+    btnAddNewEmployee.disabled = canAddNewEmployee() || countNumberEmployees() >= limitEmployee;
     btnSaveEmployee.classList.remove('visible-inline');
     btnCancelEmployee.classList.remove('visible-inline');
   
@@ -180,6 +172,14 @@ btnSaveEmployee.addEventListener('click', function(e) {
   } else {
     formNewEmployee.reportValidity();
   }
+});
+
+formNewEmployee['firstName'].addEventListener("input", function (event) {
+  checkDuplicatedEmployee(formNewEmployee);
+});
+
+formNewEmployee['lastName'].addEventListener("input", function (event) {
+  checkDuplicatedEmployee(formNewEmployee);
 });
 
 btnCancelEmployee.addEventListener('click', function(e) {
@@ -223,6 +223,8 @@ btnSaveLimit.addEventListener('click', function(e) {
 
     printNumberEmployees();
 
+    btnAddNewEmployee.disabled = canAddNewEmployee() || countNumberEmployees() >= limitEmployee;
+
     e.preventDefault();
   } else {
     formNewLimit.reportValidity();
@@ -256,7 +258,7 @@ function avarageSalary() {
     sum += parseInt(item.innerText);
   }
 
-  return sum / countNumberEmployees();
+  return (sum / countNumberEmployees()).toFixed(2);
 }
 
 function printAvarageSalary() {
@@ -264,6 +266,32 @@ function printAvarageSalary() {
 }
 
 function canAddNewEmployee() {
-  console.log(avarageSalary() > 2000);
   return avarageSalary() > 2000;
+}
+
+function checkDuplicatedEmployee(dataForm) {
+  let $items = [...$('.table_row[data-row=employee]')],
+    firstName = dataForm['firstName'].value.toCapitalizeFirstLetter(),
+    lastName = dataForm['lastName'].value.toCapitalizeFirstLetter();
+
+  let hasDuplicate = $items.some(function($element, index, array) {
+    return $element.querySelector('[data-cell=firstName]').innerText == firstName
+      &&  $element.querySelector('[data-cell=lastName]').innerText == lastName;
+    });
+
+  if (hasDuplicate) {
+    var message = `We have employee ${firstName + ' ' + lastName} in list`;
+
+    dataForm['firstName'].setCustomValidity(message);
+    dataForm['lastName'].setCustomValidity(message);
+  } else {
+    dataForm['firstName'].setCustomValidity('');
+    dataForm['lastName'].setCustomValidity('');
+  }
+  
+  return;
+}
+
+String.prototype.toCapitalizeFirstLetter = function() {
+  return this.replace(/\w\S*/g, function(word){return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();});
 }
