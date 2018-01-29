@@ -35,7 +35,7 @@
   text-align: center;
 }
 
-.table_row:not(.table_row-header):not(.table_row-footer) [name=employeeSalary]::before {
+.table_row:not(.table_row-header):not(.table_row-footer) [data-cell=salary]::before, .table_row.table_row-footer:nth-last-child(1) div:nth-last-child(1)::before {
   content: '$ ';
 }
 /* table end */

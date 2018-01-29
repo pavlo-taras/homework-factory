@@ -25,10 +25,10 @@
   <main>
     <form class="data animated">
       <input name="item" placeholder="№" disabled>
-      <input name="firstName" placeholder="First name" required>
-      <input name="lastName" placeholder="Last name" required>
-      <input name="salary" pattern="[0-9]+" placeholder="Salary" required>
-      <input name="position" placeholder="Position" required>
+      <input name="firstName" placeholder="First name" pattern="[a-zA-Z-]+" title="Please input only little/big letters and '-'" required>
+      <input name="lastName" placeholder="Last name" pattern="[a-zA-Z-]+" title="Please input only little/big letters and '-'" required>
+      <input name="salary" pattern="[0-9]+" placeholder="Salary" title="Please input only positive numbers (InputNumber => 0)" required>
+      <input name="position" placeholder="Position" pattern="[a-zA-Z-]+" title="Please input only little/big letters and '-'" required>
     </form>      
   </main>
   
