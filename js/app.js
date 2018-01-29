@@ -232,14 +232,14 @@ btnSaveLimit.addEventListener('click', function(e) {
 });
 
 btnCancelLimit.addEventListener('click', function(e) {
-  
+  console.log("value = ", '|' + formNewLimit.elements['changeLimit'].value + '|')
   formNewLimit.elements['changeLimit'].value = '';
   
   btnNewLimit.classList.add('visible-inline');
   btnSaveLimit.classList.remove('visible-inline');
   btnCancelLimit.classList.remove('visible-inline');
 
-  formNewLimit.classList.remove('flex');
+  formNewLimit.classList.remove('visible-inline');
 });
 
 function countNumberEmployees() {
